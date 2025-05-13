@@ -1,5 +1,5 @@
 /**
-*  CSOPESY OS Project.cpp : This file contains the 'main' function. Program execution begins and ends there.
+*  CSOPESY_OS_Project.cpp : This file contains the 'main' function. Program execution begins and ends there.
 *  CSOPESY - S19 (Group 10)
 *  Members:
 *          - MARTIN, ELAINE RIZ COCAL
