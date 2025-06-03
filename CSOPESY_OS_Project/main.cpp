@@ -13,76 +13,33 @@ using namespace std;
 
 #include <iostream>
 #include <cctype>
-
-
-void header() {
-    cout << " ,-----. ,---.   ,-----. ,------. ,------. ,---.,--.   ,--. \n";
-    cout << "'  .--./'   .-' '  .-.  '|  .--. '|  .---''   .-'\\  `.'  /  \n";
-    cout << "|  |    `.  `-. |  | |  ||  '--' ||  `--, `.  `-. '.    /   \n";
-    cout << "'  '--'\\.-'    |'  '-'  '|  | --' |  `---..-'    |  |  |    \n";
-    cout << " `-----'`-----'  `-----' `--'     `------'`-----'   `--'     \n";
-    cout << "                                                            \n";
-}
-
-void newLine() {
-    cout << "\n";
-}
-
-void help() {
-    cout << "List of commands:\n";
-    cout << "initialize     - Initializes the program\n";
-    cout << "screen         - Displays the screen\n";
-    cout << "scheduler-test - Tests the scheduler\n";
-    cout << "scheduler-stop - Stops the scheduler\n";
-    cout << "report-util    - Generates a report\n";
-    cout << "clear          - Clears the screen\n";
-    cout << "exit           - Exits the program\n";
-}
+#include <vector>
+#include <ctime>
+#include "ConsoleManager.h"
+#include "InputManager.h"
+#include "BaseScreen.h"
+#include "MainScreen.h"
 
 int main()
 {
-    header();
-    newLine();
-    help();
-    string command = "";
+    ConsoleManager::initialize();
+    InputManager::initialize();
 
-    while (command != "exit") {
-        cout << "Enter command: ";
-        cin >> command;
-        // insert code that converts command variable to lowercase
-        for (int i = 0; i < command.length(); i++) {
-            command[i] = tolower(command[i]);
-        }
+    // register main screen
+    std::shared_ptr<BaseScreen> mainScreen = std::make_shared<MainScreen>(MAIN_CONSOLE);
 
-        if (command == "initialize") {
-            cout << "'initialize' command recognized. Doing something.";
-            newLine();
-        }
-        else if (command == "screen") {
-            cout << "'screen' command recognized. Doing something.";
-            newLine();
-        }
-        else if (command == "scheduler-test") {
-            cout << "'scheduler-test' command recognized. Doing something.";
-            newLine();
-        }
-        else if (command == "scheduler-stop") {
-            cout << "'scheduler-stop' command recognized. Doing something.";
-            newLine();
-        }
-        else if (command == "report-util") {
-            cout << "'report-util' command recognized. Doing something.";
-            newLine();
-        }
-        else if (command == "clear") {
-            system("cls");
-            header();
-        }
-        else if (command != "exit") {
-            cout << "'" << command << "' command not recognized.";
-            newLine();
-        }
+    ConsoleManager::getInstance()->registerConsole(mainScreen);
+    ConsoleManager::getInstance()->setCurrentConsole(mainScreen);
+
+    bool running = true;
+    ConsoleManager::getInstance()->drawConsole();
+    while (running) {
+        InputManager::getInstance()->handleMainConsoleInput();
+        running = ConsoleManager::getInstance()->isRunning();
     }
+
+    InputManager::getInstance()->destroy();
+    ConsoleManager::getInstance()->destroy();
 
     return 0;
 }
