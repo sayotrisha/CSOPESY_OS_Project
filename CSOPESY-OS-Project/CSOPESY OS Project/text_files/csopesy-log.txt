@@ -1,0 +1,20 @@
+
+CPU Utilization: 0%
+Cores used: 0
+Cores available: 4
+-----------------------------------
+Running processes:
+
+Finished processes:
+Name: cycle1processName0 | 06/26/2025, 06:44:17 PM | Finished | 100/100 | 
+Name: cycle0processName0 | 06/26/2025, 06:44:14 PM | Finished | 100/100 | 
+Name: cycle2processName0 | 06/26/2025, 06:44:19 PM | Finished | 100/100 | 
+Name: cycle3processName0 | 06/26/2025, 06:44:19 PM | Finished | 100/100 | 
+Name: cycle4processName0 | 06/26/2025, 06:44:23 PM | Finished | 100/100 | 
+Name: cycle5processName0 | 06/26/2025, 06:44:23 PM | Finished | 100/100 | 
+Name: cycle6processName0 | 06/26/2025, 06:44:24 PM | Finished | 100/100 | 
+Name: cycle7processName0 | 06/26/2025, 06:44:25 PM | Finished | 100/100 | 
+Name: cycle8processName0 | 06/26/2025, 06:44:27 PM | Finished | 100/100 | 
+Name: cycle9processName0 | 06/26/2025, 06:44:28 PM | Finished | 100/100 | 
+Name: cycle10processName0 | 06/26/2025, 06:44:27 PM | Finished | 100/100 | 
+-----------------------------------
