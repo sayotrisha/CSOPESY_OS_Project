@@ -1,3 +1,15 @@
+/**
+ *  InputManager.cpp
+ *
+ *  Purpose:
+ *      This file implements the InputManager class, which handles all
+ *      user input for the console-based OS simulation. It processes commands,
+ *      delegates actions to ConsoleManager, and controls simulation features
+ *      like initialization, screen creation, and scheduler interaction.
+ *
+ *      InputManager ensures command parsing, validation, and execution,
+ *      supporting both main screen and process-specific command scopes.
+ */
 using namespace std;
 
 #include "InputManager.h"
@@ -6,29 +18,85 @@ using namespace std;
 #include "Screen.h"
 #include "Colors.h"
 
+/*-------------------------------------------------------------------
+ |
+ |  Purpose:  Default constructor for the InputManager class.
+ |      Initializes an InputManager instance. This constructor is typically
+ |      called through initialize().
+ |
+ |  Parameters: None
+ |
+ |  Returns:  Nothing
+ *-------------------------------------------------------------------*/
 InputManager::InputManager()
 {
 }
 
-// stores the created instance of console manager
+/*------------------------------------------------- Static Instance -----
+ |  Declaration: InputManager* InputManager::inputManager = inputManager;
+ |
+ |  Purpose:  Static member to hold the singleton instance of InputManager.
+ |      Ensures only one global input handler exists throughout the program.
+ |
+ |  Comments: stores the created instance of console manager
+ *-------------------------------------------------------------------*/
 InputManager* InputManager::inputManager = inputManager;
 
-
+/*--------------------------------------------------------------------
+ |  Function initialize()
+ |
+ |  Purpose:  Instantiates the singleton InputManager. Must be called before
+ |      handling user input.
+ |
+ |  Parameters: None
+ |
+ |  Returns:  Nothing
+ *-------------------------------------------------------------------*/
 void InputManager::initialize()
 {
 	inputManager = new InputManager();
 }
 
+/*------------------------------------------------------------------
+ |  Function destroy()
+ |
+ |  Purpose:  Deallocates the InputManager singleton instance.
+ |      Called when the application exits to clean up resources.
+ |
+ |  Parameters: None
+ |
+ |  Returns:  Nothing
+ *-------------------------------------------------------------------*/
 void InputManager::destroy()
 {
 	delete inputManager;
 }
 
+/*---------------------------------------------------------------------
+ |  Function getInstance()
+ |
+ |  Purpose:  Returns the singleton instance of the InputManager.
+ |
+ |  Parameters: None
+ |
+ |  Returns:  InputManager* -- pointer to the global InputManager instance.
+ *-------------------------------------------------------------------*/
 InputManager* InputManager::getInstance()
 {
 	return inputManager;
 }
 
+/*---------------------------------------------------------------------
+ |  Function handleMainConsoleInput()
+ |
+ |  Purpose:  Reads user input from the command line and parses it into tokens.
+ |      Interprets and executes commands depending on whether the current
+ |      screen is the main console or a process screen.
+ |
+ |  Parameters: None
+ |
+ |  Returns:  Nothing
+ *-------------------------------------------------------------------*/
 void InputManager::handleMainConsoleInput()
 {
     cout << "root:\\> ";
@@ -106,6 +174,21 @@ void InputManager::handleMainConsoleInput()
             system("cls");
             ConsoleManager::getInstance()->drawConsole();
         }
+        else if (command == "help") {
+            // Display the list of available commands
+            cout << LIGHT_YELLOW << "> List of commands:" << endl
+                << "    - initialize            (initializes processor configuration and scheduler based on config.txt)" << endl
+                << "    - screen -s <name>      (start a new process)" << endl
+                << "    - screen -r <name>      (reattaches to an existing process)" << endl
+                << "    - screen -ls            (list all processes)" << endl
+                << "    - process-smi           (prints process info, only applicable when attached to a process)" << endl
+                << "    - scheduler-start        (starts the creation of dummy processes at configured intervals)" << endl
+                << "    - scheduler-stop        (stops the creation of dummy processes initiated by scheduler-test)" << endl
+                << "    - report-util           (generates a CPU utilization report and writes it to csopesy-log.txt)" << endl
+                << "    - clear                 (clears the screen)" << endl
+                << "    - help                  (displays list of commands)" << endl
+                << "    - exit                  (exits the emulator)" << RESET << endl;
+        }
         else if (command == "screen") {
             if (tokens.size() > 1) {
                 string screenCommand = tokens[1];
@@ -126,9 +209,9 @@ void InputManager::handleMainConsoleInput()
                     }
                 }
                 else if (screenCommand == "-r" && !processName.empty()) {
-                    cin >> processName;
+                    //cin >> processName;
 
-                    // Check if screen exists before switching
+                    //// Check if screen exists before switching
                     auto screenMap = ConsoleManager::getInstance()->getScreenMap();
                     if (screenMap.find(processName) != screenMap.end()) {
                         ConsoleManager::getInstance()->switchConsole(processName);

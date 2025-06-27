@@ -1,4 +1,5 @@
 ﻿  ConsoleManager.cpp
   InputManager.cpp
   Generating Code...
-  CSOPESY OS Project.vcxproj -> C:\Users\Alina\Downloads\CSOPESY-OS-Project-068985f651cba79e2f287232710e12609179fad8\CSOPESY-OS-Project-068985f651cba79e2f287232710e12609179fad8\x64\Debug\CSOPESY OS Project.exe
+  LINK : D:\Documents\School\STINTSY\CSOPESY_OS_Project\CSOPESY-OS-Project\x64\Debug\CSOPESY OS Project.exe not found or not built by the last incremental link; performing full link
+  CSOPESY OS Project.vcxproj -> D:\Documents\School\STINTSY\CSOPESY_OS_Project\CSOPESY-OS-Project\x64\Debug\CSOPESY OS Project.exe

@@ -7,7 +7,7 @@
 #define RED     "\033[0;31m"
 #define GREEN   "\033[38;2;119;221;119m"    // Pastel green
 #define YELLOW  "\033[38;2;253;253;150m"    // Pastel yellow
-#define BLUE    "\033[38;2;174;198;207m"    // Pastel blue
+#define BLUE    "\033[38;2;0;102;255m"    // Vivid blue (not pastel)
 #define MAGENTA "\033[38;2;255;179;255m"    // Pastel magenta
 #define CYAN    "\033[38;2;178;255;255m"    // Pastel cyan
 #define WHITE   "\033[0;37m"

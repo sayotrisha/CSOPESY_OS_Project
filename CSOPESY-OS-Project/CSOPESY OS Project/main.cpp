@@ -7,6 +7,13 @@
 *          - SAYO, TRISHA ALISSANDRA
 *
 *  Submitted to: Mr. DE LA CRUZ, REN TRISTAN A.
+*  main.cpp
+*
+*  Purpose:
+*      This file contains the main entry point of the console-based operating
+*      system simulation. It initializes key system components such as the
+*      ConsoleManager and InputManager, registers the main console screen,
+*      and starts the input-handling loop for user interaction.
 **/
 
 using namespace std;
@@ -23,8 +30,17 @@ using namespace std;
 #include <fstream>
 #include <random>
 
-
-
+/*--------------------------------------------------------------------
+ |  Function main()
+ |
+ |  Purpose:  Entry point of the simulation. Sets up the ConsoleManager
+ |      and InputManager, registers the main screen, and enters a loop to
+ |      continuously handle user input until the application exits.
+ |
+ |  Parameters: None
+ |
+ |  Returns:  int -- exit status (0 indicates normal program termination)
+ *-------------------------------------------------------------------*/
 int main()
 {
     ConsoleManager::initialize();

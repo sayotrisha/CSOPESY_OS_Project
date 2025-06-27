@@ -1,20 +1,27 @@
 
 CPU Utilization: 0%
 Cores used: 0
-Cores available: 4
+Cores available: 32
 -----------------------------------
 Running processes:
 
 Finished processes:
-Name: cycle1processName0 | 06/26/2025, 06:44:17 PM | Finished | 100/100 | 
-Name: cycle0processName0 | 06/26/2025, 06:44:14 PM | Finished | 100/100 | 
-Name: cycle2processName0 | 06/26/2025, 06:44:19 PM | Finished | 100/100 | 
-Name: cycle3processName0 | 06/26/2025, 06:44:19 PM | Finished | 100/100 | 
-Name: cycle4processName0 | 06/26/2025, 06:44:23 PM | Finished | 100/100 | 
-Name: cycle5processName0 | 06/26/2025, 06:44:23 PM | Finished | 100/100 | 
-Name: cycle6processName0 | 06/26/2025, 06:44:24 PM | Finished | 100/100 | 
-Name: cycle7processName0 | 06/26/2025, 06:44:25 PM | Finished | 100/100 | 
-Name: cycle8processName0 | 06/26/2025, 06:44:27 PM | Finished | 100/100 | 
-Name: cycle9processName0 | 06/26/2025, 06:44:28 PM | Finished | 100/100 | 
-Name: cycle10processName0 | 06/26/2025, 06:44:27 PM | Finished | 100/100 | 
+Name: process4 | 06/27/2025, 05:33:32 PM | Finished | 100/100 | 
+Name: process0 | 06/27/2025, 05:33:30 PM | Finished | 100/100 | 
+Name: process1 | 06/27/2025, 05:33:30 PM | Finished | 100/100 | 
+Name: process2 | 06/27/2025, 05:33:31 PM | Finished | 100/100 | 
+Name: process3 | 06/27/2025, 05:33:31 PM | Finished | 100/100 | 
+Name: process5 | 06/27/2025, 05:33:32 PM | Finished | 100/100 | 
+Name: process6 | 06/27/2025, 05:33:33 PM | Finished | 100/100 | 
+Name: process7 | 06/27/2025, 05:33:33 PM | Finished | 100/100 | 
+Name: process8 | 06/27/2025, 05:33:34 PM | Finished | 100/100 | 
+Name: process13 | 06/27/2025, 05:33:36 PM | Finished | 100/100 | 
+Name: process9 | 06/27/2025, 05:33:34 PM | Finished | 100/100 | 
+Name: process12 | 06/27/2025, 05:33:36 PM | Finished | 100/100 | 
+Name: process10 | 06/27/2025, 05:33:35 PM | Finished | 100/100 | 
+Name: process11 | 06/27/2025, 05:33:35 PM | Finished | 100/100 | 
+Name: process14 | 06/27/2025, 05:33:37 PM | Finished | 100/100 | 
+Name: process15 | 06/27/2025, 05:33:37 PM | Finished | 100/100 | 
+Name: process16 | 06/27/2025, 05:33:38 PM | Finished | 100/100 | 
+Name: process17 | 06/27/2025, 05:33:38 PM | Finished | 100/100 | 
 -----------------------------------
