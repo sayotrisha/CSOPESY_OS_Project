@@ -19,6 +19,7 @@
 #include <condition_variable>
 #include <mutex>
 #include <vector>
+#include <fstream>
 
  /*----------------------------------------------------------------------
   |  Function Scheduler(int numCores)
@@ -217,6 +218,12 @@ void Scheduler::stop() {
  *-------------------------------------------------------------------*/
 void Scheduler::workerFunction(int core, std::shared_ptr<Screen> process) {
     string timestamp = ConsoleManager::getInstance()->getCurrentTimestamp();
+    fstream file;
+    string fileName = process->getProcessName() + ".txt";
+    file.open(fileName, std::ios::app);
+
+    //file << "Process name: " << process->getProcessName() << std::endl;
+    //file << "Logs: " << endl << endl;
 
     // Ensure the process keeps its original core for FCFS and RR
     if (process->getCPUCoreID() == -1) {
@@ -231,6 +238,14 @@ void Scheduler::workerFunction(int core, std::shared_ptr<Screen> process) {
     if (algorithm == "fcfs") {
         // First-Come, First-Served logic
         for (int i = 0; i < process->getTotalLine(); i++) {
+
+            process->setCPUCoreID(core);
+           
+            std::this_thread::sleep_for(std::chrono::milliseconds(80));
+            string printed;
+            unordered_map<string, shared_ptr<BaseScreen>> screenMap = ConsoleManager::getInstance()->getScreenMap();
+            auto it = screenMap.find(process->getProcessName());
+
             if (ConsoleManager::getInstance()->getDelayPerExec() != 0) {
                 for (int i = 0; i < ConsoleManager::getInstance()->getDelayPerExec(); i++) {
                     std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -239,6 +254,19 @@ void Scheduler::workerFunction(int core, std::shared_ptr<Screen> process) {
             else {
 				std::this_thread::sleep_for(std::chrono::milliseconds(100));
             }
+            if (file.is_open()) {
+                file.seekg(0, std::ios::end);
+                if (file.tellg() == 0) {  // not empty
+                    file << "Process name: " << process->getProcessName() << std::endl;
+                    file << "Logs: " << std::endl << std::endl;
+                }
+                shared_ptr<Screen> screenPtr = dynamic_pointer_cast<Screen>(screenMap.find(process->getProcessName())->second);
+                file << "(" << ConsoleManager::getInstance()->getCurrentTimestamp() << ")";
+                file << "  Core: " << process->getCPUCoreID();
+                file << " \"Hello world from " << process->getProcessName() << "!\"" << std::endl;
+            }else {
+                std::cerr << "Failed to open " << fileName << std::endl;
+            }
             process->setCurrentLine(process->getCurrentLine() + 1);
         }
     }
@@ -246,6 +274,13 @@ void Scheduler::workerFunction(int core, std::shared_ptr<Screen> process) {
     else if (algorithm == "rr") {
        // Round-Robin logic
        int quantum = ConsoleManager::getInstance()->getTimeSlice();  // Get RR time slice
+
+       process->setCPUCoreID(core);
+       std::this_thread::sleep_for(std::chrono::milliseconds(80));
+       string coreIDstr;
+       string printed;
+       unordered_map<string, shared_ptr<BaseScreen>> screenMap = ConsoleManager::getInstance()->getScreenMap();
+       auto it = screenMap.find(process->getProcessName());
 
        // Process for the duration of the quantum or until the process is finished
        for (int i = 0; i < quantum && process->getCurrentLine() < process->getTotalLine(); i++) {
@@ -256,6 +291,20 @@ void Scheduler::workerFunction(int core, std::shared_ptr<Screen> process) {
            }
 		   else {
 			   std::this_thread::sleep_for(std::chrono::milliseconds(100));
+           }
+           if (file.is_open()) {
+               file.seekg(0, std::ios::end);
+               if (file.tellg() == 0) {  // not empty
+                   file << "Process name: " << process->getProcessName() << std::endl;
+                   file << "Logs: " << std::endl << std::endl;
+               }
+               shared_ptr<Screen> screenPtr = dynamic_pointer_cast<Screen>(screenMap.find(process->getProcessName())->second);
+               file << "(" << ConsoleManager::getInstance()->getCurrentTimestamp() << ")";
+               file << "  Core: " << process->getCPUCoreID();
+               file << " \"Hello world from " << process->getProcessName() << "!\"" << std::endl;
+           }
+           else {
+               std::cerr << "Failed to open " << fileName << std::endl;
            }
            process->setCurrentLine(process->getCurrentLine() + 1);
 
@@ -268,7 +317,7 @@ void Scheduler::workerFunction(int core, std::shared_ptr<Screen> process) {
            processQueueCondition.notify_one();
        }
     }
-
+    file.close();
     string timestampFinished = ConsoleManager::getInstance()->getCurrentTimestamp();
     process->setTimestampFinished(timestampFinished);  // Log completion time
 }

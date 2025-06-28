@@ -147,6 +147,8 @@ void ConsoleManager::schedulerTest() {
             Scheduler::getInstance()->addProcessToQueue(screenPtr);
             ConsoleManager::getInstance()->registerConsole(processScreen);
             ConsoleManager::getInstance()->cpuCycles++;
+
+            ConsoleManager::getInstance()->printProcess(processName);
             //cout << "Process " << processName << " added to queue." << endl;
 
         }
@@ -615,8 +617,24 @@ void ConsoleManager::setDelayPerExec(int delayPerExec) {
 void ConsoleManager::printProcess(string enteredProcess){
     unordered_map<string, shared_ptr<BaseScreen>> screenMap = ConsoleManager::getInstance()->getScreenMap();
     auto it = screenMap.find(enteredProcess);
+
+    if (it == screenMap.end()) {
+        cout << RED << "Process: '" << enteredProcess << "' not found." << RESET << endl;
+        return;
+    }
+
+    shared_ptr<Screen> screenPtr = dynamic_pointer_cast<Screen>(it->second);
+    if (!screenPtr) {
+        cout << RED << "Screen '" << enteredProcess << "' is not a process screen." << RESET << endl;
+        return;
+    }
+    if (!screenPtr->isFinished()) {
+        //cout << RED << "Process is not yet finished." << RESET << endl;
+        return;
+    }
     for (const auto& pair : screenMap) {
         shared_ptr<Screen> screenPtr = dynamic_pointer_cast<Screen>(pair.second);
+        if (!screenPtr) continue;
 
         //check if process name exits
         if (screenPtr->getProcessName() == enteredProcess) {
