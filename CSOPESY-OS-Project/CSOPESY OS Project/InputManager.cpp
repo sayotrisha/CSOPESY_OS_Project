@@ -251,7 +251,9 @@ void InputManager::handleMainConsoleInput()
             ConsoleManager::getInstance()->switchConsole(MAIN_CONSOLE);
         }
         else if (command == "process-smi") {
+            string processName = ConsoleManager::getInstance()->getCurrentConsole()->getConsoleName();
             ConsoleManager::getInstance()->printProcessSmi();
+            ConsoleManager::getInstance()->printProcess(processName);
         }
         else {
             cout << RED << "> Error! Unrecognized command : " << command << RESET << endl;

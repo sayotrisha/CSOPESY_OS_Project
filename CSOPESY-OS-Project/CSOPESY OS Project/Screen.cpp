@@ -11,6 +11,7 @@
 #include <fstream> 
 #include <filesystem> // for folder creation
 #include "PrintCommand.h"
+#include "DeclareCommand.h"
 #include <vector>
 #include <iostream>
 #include <thread>
@@ -48,7 +49,6 @@ Screen::Screen(string processName, int currentLine, string timestamp)
 	// create 100 print commands
 	for(int i=0; i<totalLine; i++){
 		this->printCommands.push_back(PrintCommand(i, "Printing from " + processName + " " + std::to_string(i)));
-
 	}
 	
 }
@@ -342,7 +342,8 @@ void Screen::createFile()
 	fstream file;
 	//create file if it doesnt exit
 	file.open(fileName, std::ios::out | std::ios::trunc);
-	file << "Hello world from "<< this->processName << "!" << std::endl;
+	//file << this->getTimestampFinished <<
+	//file << "Hello world from "<< this->processName << "!" << std::endl;
 	file.close();
 }
 
