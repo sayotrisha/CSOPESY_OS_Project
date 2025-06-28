@@ -138,14 +138,16 @@ void InputManager::handleMainConsoleInput()
             });
             schedulerThread.detach();
 
-            cout << GREEN << "'Processor Configuration Initialized'" << RESET << endl;
+            cout << GREEN << "> Processor Configuration Initialized" << RESET << endl;
         }
         else if (command == "exit") {
+            cout << RED << "> Exiting emulator..." << RESET << endl;
             ConsoleManager::getInstance()->exitApplication();
         }
         else if (command == "scheduler-start") {
             if (!Scheduler::getInstance()->getSchedulerTestRunning()) {
-                cout << GREEN << "Scheduler Test now running" << RESET << endl;
+                cout << GREEN << "> Scheduler now running" << RESET << endl;
+                cout << GREEN << "> Creating dummy processes..." << RESET << endl;
                 Scheduler::getInstance()->setSchedulerTestRunning(true);
                 // create batchProcessFrequency number of processes
                 std::thread schedulerTestThread([&] {
@@ -155,16 +157,17 @@ void InputManager::handleMainConsoleInput()
                
             }
             else {
-                cout << YELLOW << "Scheduler Test already running" << RESET << endl;
+                cout << YELLOW << "> Scheduler Test already running" << RESET << endl;
             }
         }
         else if (command == "scheduler-stop") {
             if (Scheduler::getInstance()->getSchedulerTestRunning()) {
-                cout << RED << "Scheduler Test stopped" << RESET << endl;
+                cout << RED << "> Scheduler stopped" << RESET << endl;
+                cout << GREEN << "> Stopping creation of dummy processes..." << RESET << endl;
                 Scheduler::getInstance()->setSchedulerTestRunning(false);
             }
             else {
-                cout << RED << "Scheduler Test not running" << RESET << endl;
+                cout << RED << "> Scheduler not running" << RESET << endl;
             }
         }
         else if (command == "report-util") {
@@ -196,7 +199,7 @@ void InputManager::handleMainConsoleInput()
 
                 if (screenCommand == "-s" && !processName.empty()) {
                     if (ConsoleManager::getInstance()->getScreenMap().contains(processName)) {
-                        cout << RED << "Screen already exists." << RESET << endl;
+                        cout << RED << "> Error: Process already exists." << RESET << endl;
                     }
                     else {
                         string timestamp = ConsoleManager::getInstance()->getCurrentTimestamp();
@@ -218,34 +221,40 @@ void InputManager::handleMainConsoleInput()
                         ConsoleManager::getInstance()->drawConsole();
                     }
                     else {
-                        cout << RED << "Error: Screen with name '" << processName << "' does not exist or was not initialized." << RESET << endl;
+                        cout << RED << "> Error: Screen with name '" << processName << "' does not exist or was not initialized." << RESET << endl;
                     }
                 }
                 else if (screenCommand == "-ls") {
+                    // List all active sessions
+                    system("cls");
+
+                    ConsoleManager::getInstance()->drawConsole();
+                    cout << "root:\\> screen -ls" << endl;
                     ConsoleManager::getInstance()->displayProcessList();
                 }
                 else {
-                    cout << RED << "Command not recognized." << RESET << endl;
+                    cout << RED << "> Error! Unrecognized command : " << command << RESET << endl;
                 }
             }
             else {
-                cout << RED << "Command not recognized." << RESET << endl;
+                cout << RED << "> Error! Unrecognized command : " << command << RESET << endl;
             }
         }
         else {
-            cout << RED << "Command not recognized." << RESET << endl;
+            cout << RED << "> Error! Unrecognized command : " << command << RESET << endl;
         }
     }
     else {
         // Process-specific commands
         if (command == "exit") {
+            cout << "> Exiting process..." << endl;
             ConsoleManager::getInstance()->switchConsole(MAIN_CONSOLE);
         }
         else if (command == "process-smi") {
             ConsoleManager::getInstance()->printProcessSmi();
         }
         else {
-            cout << RED << "Command not recognized." << RESET << endl;
+            cout << RED << "> Error! Unrecognized command : " << command << RESET << endl;
         }
     }
 }

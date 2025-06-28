@@ -186,18 +186,6 @@ void ConsoleManager::drawConsole() {
 
         if (this->getCurrentConsole()->getConsoleName() == MAIN_CONSOLE) {
             this->printHeader();
-            cout << CYAN << "> List of commands:" << endl
-                << "    - initialize            (initializes processor configuration and scheduler based on config.txt)" << endl
-                << "    - screen -s <name>      (start a new process)" << endl
-                << "    - screen -r <name>      (reattaches to an existing process)" << endl
-                << "    - screen -ls            (list all processes)" << endl
-                << "    - process-smi           (prints process info, only applicable when attached to a process)" << endl
-                << "    - scheduler-start        (starts the creation of dummy processes at configured intervals)" << endl
-                << "    - scheduler-stop        (stops the creation of dummy processes initiated by scheduler-test)" << endl
-                << "    - report-util           (generates a CPU utilization report and writes it to csopesy-log.txt)" << endl
-                << "    - clear                 (clears the screen)" << endl
-                << "    - help                  (displays list of commands)" << endl
-                << "    - exit                  (exits the emulator)" << RESET << endl;
         }
         else {
             if (this->screenMap.contains(consoleName)) {
@@ -815,4 +803,47 @@ void ConsoleManager::printHeader() {
     cout << " `-----'`-----'  `-----' `--'     `------'`-----'   `--'     \n";
     cout << "________________________________________________________________________________\n" << RESET;
     cout << "\n";
+}
+
+/*---------------------------------------------------------------------
+ |  Function printMarquee()
+ |
+ |  Purpose:  Prints a marquee welcome banner and commands for the main screen view.
+ |
+ |  Parameters: None
+ |
+ |  Returns:  Nothing
+ *-------------------------------------------------------------------*/
+void ConsoleManager::printMarquee() {
+    std::string text = "Welcome to our Command Line Emulator!!! ";
+    int len = static_cast<int>(text.size());
+
+    // Marquee effect: one full cycle
+    for (int offset = 0; offset < len; ++offset) {
+        // Move cursor to beginning of line
+        cout << "\r";
+
+        // Print substring starting at offset
+        cout << PASTEL_PINK <<text.substr(offset);
+
+        // Then print the leading part to complete the loop
+        cout << text.substr(0, offset) << RESET;
+
+        cout.flush();
+
+        // Sleep using std::this_thread::sleep_for
+        this_thread::sleep_for(std::chrono::milliseconds(200));
+    }
+    cout << CYAN << "\n> List of commands:" << endl
+        << "    - initialize            (initializes processor configuration and scheduler based on config.txt)" << endl
+        << "    - screen -s <name>      (start a new process)" << endl
+        << "    - screen -r <name>      (reattaches to an existing process)" << endl
+        << "    - screen -ls            (list all processes)" << endl
+        << "    - process-smi           (prints process info, only applicable when attached to a process)" << endl
+        << "    - scheduler-start       (starts the creation of dummy processes at configured intervals)" << endl
+        << "    - scheduler-stop        (stops the creation of dummy processes initiated by scheduler-test)" << endl
+        << "    - report-util           (generates a CPU utilization report and writes it to csopesy-log.txt)" << endl
+        << "    - clear                 (clears the screen)" << endl
+        << "    - help                  (displays list of commands)" << endl
+        << "    - exit                  (exits the emulator)" << RESET << endl;
 }

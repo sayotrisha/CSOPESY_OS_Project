@@ -29,6 +29,7 @@ public:
 	static ConsoleManager* getInstance();
 
 	void printHeader();
+	void printMarquee();
 	void drawConsole();
 	void destroy();
 	string getCurrentTimestamp();

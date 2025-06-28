@@ -29,6 +29,7 @@ using namespace std;
 #include "Scheduler.h"
 #include <fstream>
 #include <random>
+#include "Colors.h"
 
 /*--------------------------------------------------------------------
  |  Function main()
@@ -54,6 +55,7 @@ int main()
     
     bool running = true;
     ConsoleManager::getInstance()->drawConsole();
+    ConsoleManager::getInstance()->printMarquee();
 
     while (running){
         InputManager::getInstance()->handleMainConsoleInput();

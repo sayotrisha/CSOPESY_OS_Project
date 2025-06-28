@@ -1,27 +1,56 @@
 
-CPU Utilization: 0%
-Cores used: 0
-Cores available: 32
+CPU Utilization: 100%
+Cores used: 16
+Cores available: 0
 -----------------------------------
 Running processes:
+Name: process4 | 06/28/2025, 04:39:21 PM | Core: 6 | 63/5000 | 
+Name: process0 | 06/28/2025, 04:39:17 PM | Core: 13 | 70/5000 | 
+Name: process1 | 06/28/2025, 04:39:18 PM | Core: 7 | 70/5000 | 
+Name: process2 | 06/28/2025, 04:39:19 PM | Core: 7 | 66/5000 | 
+Name: process19 | 06/28/2025, 04:39:37 PM | Core: 11 | 32/5000 | 
+Name: process3 | 06/28/2025, 04:39:20 PM | Core: 8 | 65/5000 | 
+Name: process18 | 06/28/2025, 04:39:36 PM | Core: 14 | 35/5000 | 
+Name: process5 | 06/28/2025, 04:39:22 PM | Core: 10 | 60/5000 | 
+Name: process6 | 06/28/2025, 04:39:23 PM | Core: 10 | 60/5000 | 
+Name: process7 | 06/28/2025, 04:39:24 PM | Core: 1 | 55/5000 | 
+Name: process8 | 06/28/2025, 04:39:25 PM | Core: 3 | 55/5000 | 
+Name: process13 | 06/28/2025, 04:39:31 PM | Core: 6 | 45/5000 | 
+Name: process9 | 06/28/2025, 04:39:27 PM | Core: 9 | 54/5000 | 
+Name: process12 | 06/28/2025, 04:39:30 PM | Core: 3 | 45/5000 | 
+Name: process10 | 06/28/2025, 04:39:28 PM | Core: 2 | 50/5000 | 
+Name: process11 | 06/28/2025, 04:39:29 PM | Core: 8 | 50/5000 | 
+Name: process14 | 06/28/2025, 04:39:32 PM | Core: 10 | 42/5000 | 
+Name: process15 | 06/28/2025, 04:39:33 PM | Core: 7 | 40/5000 | 
+Name: process16 | 06/28/2025, 04:39:34 PM | Core: 13 | 40/5000 | 
+Name: process17 | 06/28/2025, 04:39:35 PM | Core: 9 | 35/5000 | 
+Name: process20 | 06/28/2025, 04:39:38 PM | Core: 5 | 30/5000 | 
+Name: process21 | 06/28/2025, 04:39:39 PM | Core: 0 | 30/5000 | 
+Name: process22 | 06/28/2025, 04:39:40 PM | Core: 12 | 29/5000 | 
+Name: process23 | 06/28/2025, 04:39:41 PM | Core: 14 | 25/5000 | 
+Name: process24 | 06/28/2025, 04:39:42 PM | Core: 9 | 25/5000 | 
+Name: process25 | 06/28/2025, 04:39:43 PM | Core: 14 | 25/5000 | 
+Name: process26 | 06/28/2025, 04:39:44 PM | Core: 13 | 21/5000 | 
+Name: process27 | 06/28/2025, 04:39:46 PM | Core: 11 | 20/5000 | 
+Name: process28 | 06/28/2025, 04:39:47 PM | Core: 2 | 20/5000 | 
+Name: process29 | 06/28/2025, 04:39:48 PM | Core: 3 | 20/5000 | 
+Name: process30 | 06/28/2025, 04:39:49 PM | Core: 15 | 17/5000 | 
+Name: process41 | 06/28/2025, 04:40:00 PM | Core: 4 | 5/5000 | 
+Name: process31 | 06/28/2025, 04:39:50 PM | Core: 6 | 15/5000 | 
+Name: process40 | 06/28/2025, 04:39:59 PM | Core: 5 | 7/5000 | 
+Name: process32 | 06/28/2025, 04:39:51 PM | Core: 1 | 15/5000 | 
+Name: process43 | 06/28/2025, 04:40:02 PM | Core: 12 | 5/5000 | 
+Name: process33 | 06/28/2025, 04:39:52 PM | Core: 5 | 15/5000 | 
+Name: process42 | 06/28/2025, 04:40:01 PM | Core: 15 | 5/5000 | 
+Name: process34 | 06/28/2025, 04:39:53 PM | Core: 2 | 14/5000 | 
+Name: process45 | 06/28/2025, 04:40:05 PM | Core: 4 | 5/5000 | 
+Name: process35 | 06/28/2025, 04:39:54 PM | Core: 8 | 11/5000 | 
+Name: process44 | 06/28/2025, 04:40:03 PM | Core: 11 | 5/5000 | 
+Name: process36 | 06/28/2025, 04:39:55 PM | Core: 0 | 10/5000 | 
+Name: process37 | 06/28/2025, 04:39:56 PM | Core: 4 | 10/5000 | 
+Name: process46 | 06/28/2025, 04:40:06 PM | Core: 0 | 3/5000 | 
+Name: process38 | 06/28/2025, 04:39:57 PM | Core: 15 | 10/5000 | 
+Name: process39 | 06/28/2025, 04:39:58 PM | Core: 1 | 10/5000 | 
 
 Finished processes:
-Name: process4 | 06/27/2025, 05:33:32 PM | Finished | 100/100 | 
-Name: process0 | 06/27/2025, 05:33:30 PM | Finished | 100/100 | 
-Name: process1 | 06/27/2025, 05:33:30 PM | Finished | 100/100 | 
-Name: process2 | 06/27/2025, 05:33:31 PM | Finished | 100/100 | 
-Name: process3 | 06/27/2025, 05:33:31 PM | Finished | 100/100 | 
-Name: process5 | 06/27/2025, 05:33:32 PM | Finished | 100/100 | 
-Name: process6 | 06/27/2025, 05:33:33 PM | Finished | 100/100 | 
-Name: process7 | 06/27/2025, 05:33:33 PM | Finished | 100/100 | 
-Name: process8 | 06/27/2025, 05:33:34 PM | Finished | 100/100 | 
-Name: process13 | 06/27/2025, 05:33:36 PM | Finished | 100/100 | 
-Name: process9 | 06/27/2025, 05:33:34 PM | Finished | 100/100 | 
-Name: process12 | 06/27/2025, 05:33:36 PM | Finished | 100/100 | 
-Name: process10 | 06/27/2025, 05:33:35 PM | Finished | 100/100 | 
-Name: process11 | 06/27/2025, 05:33:35 PM | Finished | 100/100 | 
-Name: process14 | 06/27/2025, 05:33:37 PM | Finished | 100/100 | 
-Name: process15 | 06/27/2025, 05:33:37 PM | Finished | 100/100 | 
-Name: process16 | 06/27/2025, 05:33:38 PM | Finished | 100/100 | 
-Name: process17 | 06/27/2025, 05:33:38 PM | Finished | 100/100 | 
 -----------------------------------
