@@ -21,6 +21,7 @@ using namespace std;
 #include <unordered_map>
 #include "Screen.h"
 #include "Colors.h"
+#include <random>
 
 /*------------------------------------------------- ConsoleManager (Constructor) -----
  |  Function ConsoleManager()
@@ -680,16 +681,37 @@ void ConsoleManager::printProcess(string enteredProcess){
  |  Returns:  Nothing
  *-------------------------------------------------------------------*/
 void ConsoleManager::printProcessSmi() {
-	cout << "Process: " << this->consoleName << endl;
+    cout << "Process: " << this->consoleName << endl;
     if (this->screenMap[consoleName]->getCurrentLine() == this->screenMap[consoleName]->getTotalLine()) {
-		cout << GREEN << "Finished!" << RESET << endl;
+        cout << GREEN << "Finished!" << RESET << endl;
     }
     else {
         cout << YELLOW << "Current Line: " << this->screenMap[consoleName]->getCurrentLine() << endl;
         cout << "Lines of Code: " << this->screenMap[consoleName]->getTotalLine() << RESET << endl;
     }
-	
+
+    // ??? New logic: generate alternating PRINT/ADD instructions ???
+    auto proc = this->screenMap[consoleName];
+    int instrCount = proc->getTotalLine();                     // total instructions per process
+    std::random_device rd;                                     // seed for RNG
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dist(1, 10);               // offsets between 1 and 10
+
+    bool nextIsPrint = true;
+    for (int i = 0; i < instrCount; ++i) {
+        int x = proc->getCurrentLine();                        // or use i if you prefer
+        if (nextIsPrint) {
+            //cout << "PRINT(\"Value from: \" + std::to_string(" << x << "))" << endl;
+            cout << "Print(\"Value from: \" +" << x << ")" << endl;
+        }
+        else {
+            int offset = dist(gen);
+            cout << "ADD(" << x << ", " << x << ", " << offset << ")" << endl;
+        }
+        nextIsPrint = !nextIsPrint;
+    }
 }
+
 
 /*--------------------------------------------------------------------
  |  Function getCurrentConsole()
