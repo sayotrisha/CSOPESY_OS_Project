@@ -29,8 +29,5 @@ To run this project, you need:
 3. The program should execute and display the appropriate output in the console.
 
 ## Author
-- CAASI, SAMANTHA NICOLE LINTAG - samantha_caasi@dlsu.edu.ph
-- GUTIERREZ, CARLOS KRISTOFFER PABALAN - carlos_gutierrez@dlsu.edu.ph
-- MARCELLANA, JOHN PATRICK TABERNILLA - john_patrick_marcellana@dlsu.edu.ph
 - SAYO, TRISHA ALISSANDRA - trisha_sayo@dlsu.edu.ph
 
