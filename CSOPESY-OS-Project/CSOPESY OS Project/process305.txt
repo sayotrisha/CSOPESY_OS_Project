@@ -1,0 +1,13 @@
+Process name: process305
+Logs: 
+
+(06/28/2025, 10:57:15 PM)  Core: 0 "Hello world from process305!"
+(06/28/2025, 10:57:16 PM)  Core: 0 "Hello world from process305!"
+(06/28/2025, 10:57:16 PM)  Core: 0 "Hello world from process305!"
+(06/28/2025, 10:57:16 PM)  Core: 0 "Hello world from process305!"
+(06/28/2025, 10:57:16 PM)  Core: 0 "Hello world from process305!"
+(06/28/2025, 10:57:16 PM)  Core: 0 "Hello world from process305!"
+(06/28/2025, 10:57:16 PM)  Core: 0 "Hello world from process305!"
+(06/28/2025, 10:57:16 PM)  Core: 0 "Hello world from process305!"
+(06/28/2025, 10:57:16 PM)  Core: 0 "Hello world from process305!"
+(06/28/2025, 10:57:16 PM)  Core: 0 "Hello world from process305!"

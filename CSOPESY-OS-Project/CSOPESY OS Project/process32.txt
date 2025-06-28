@@ -1,0 +1,13 @@
+Process name: process32
+Logs: 
+
+(06/28/2025, 10:51:27 PM)  Core: 0 "Hello world from process32!"
+(06/28/2025, 10:51:27 PM)  Core: 0 "Hello world from process32!"
+(06/28/2025, 10:51:27 PM)  Core: 0 "Hello world from process32!"
+(06/28/2025, 10:51:27 PM)  Core: 0 "Hello world from process32!"
+(06/28/2025, 10:51:28 PM)  Core: 0 "Hello world from process32!"
+(06/28/2025, 10:51:28 PM)  Core: 0 "Hello world from process32!"
+(06/28/2025, 10:51:28 PM)  Core: 0 "Hello world from process32!"
+(06/28/2025, 10:51:28 PM)  Core: 0 "Hello world from process32!"
+(06/28/2025, 10:51:28 PM)  Core: 0 "Hello world from process32!"
+(06/28/2025, 10:51:28 PM)  Core: 0 "Hello world from process32!"
