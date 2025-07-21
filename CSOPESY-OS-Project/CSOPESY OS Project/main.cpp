@@ -30,6 +30,7 @@ using namespace std;
 #include <fstream>
 #include <random>
 #include "Colors.h"
+#include "FlatMemoryAllocator.h"
 
 /*--------------------------------------------------------------------
  |  Function main()
@@ -56,6 +57,9 @@ int main()
     bool running = true;
     ConsoleManager::getInstance()->drawConsole();
     ConsoleManager::getInstance()->printMarquee();
+
+    const size_t maximumMemorySize = 16384;
+    FlatMemoryAllocator::initialize(maximumMemorySize);
 
     while (running){
         InputManager::getInstance()->handleMainConsoleInput();

@@ -10,7 +10,7 @@ using namespace std;
 class Screen : public BaseScreen
 {
 public:
-	Screen(string processName, int currentLine, string timestamp);
+	Screen(string processName, int currentLine, string timestamp, size_t memoryRequired);
 	~Screen();
 
 	enum ProcessState
@@ -27,7 +27,7 @@ public:
 	void setTotalLine(int totalLine);
 	void setTimestamp(string timestamp);
 	void setTimestampFinished(string timestampFinished);
-
+	void setMemoryRequired(size_t memoryRequired);
 
 	void executeCurrentCommand();
 	void moveToNextLine();
@@ -38,6 +38,7 @@ public:
 	void createFile();
 	void viewFile();
 	void setRandomIns();
+	size_t getMemoryRequired() const;
 	ProcessState getState() const;
 
 	string getProcessName() override;
@@ -57,5 +58,5 @@ private:
 	string timestampFinished;
 	std::vector<PrintCommand> printCommands;
 	ProcessState currentState;
-
+	size_t memoryRequired;
 };

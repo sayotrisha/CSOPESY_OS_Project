@@ -37,20 +37,23 @@ using namespace std;
  |
  |  Returns:  Nothing (constructor)
  *-------------------------------------------------------------------*/
-Screen::Screen(string processName, int currentLine, string timestamp)
-    : BaseScreen(processName), cpuCoreID(-1), commandCounter(0), currentState(ProcessState::READY)
+
+Screen::Screen(string processName, int currentLine, string timestamp, size_t memoryRequired)
+	: BaseScreen(processName), cpuCoreID(-1), commandCounter(0), currentState(ProcessState::READY)
 {
-    this->processName = processName;
-    this->currentLine = currentLine;
+	this->processName = processName;
+	this->currentLine = currentLine;
 	this->setRandomIns();
-    this->timestamp = timestamp;
+	this->memoryRequired = memoryRequired;
+	this->timestamp = timestamp;
 
 
 	// create 100 print commands
-	for(int i=0; i<totalLine; i++){
+	for (int i = 0; i < totalLine; i++) {
 		this->printCommands.push_back(PrintCommand(i, "Printing from " + processName + " " + std::to_string(i)));
+
 	}
-	
+
 }
 
 /*---------------------------------------------------------------------
@@ -368,4 +371,14 @@ void Screen::viewFile()
 		cout << "\"" << endl;
 	}
 	file.close();
+}
+
+size_t Screen::getMemoryRequired() const
+{
+	return this->memoryRequired;
+}
+
+void Screen::setMemoryRequired(size_t memoryRequired)
+{
+	this->memoryRequired = memoryRequired;
 }

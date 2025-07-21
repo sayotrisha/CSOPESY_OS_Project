@@ -17,6 +17,7 @@ using namespace std;
 #include "ConsoleManager.h"
 #include "Screen.h"
 #include "Colors.h"
+#include "FlatMemoryAllocator.h"
 
 /*-------------------------------------------------------------------
  |
@@ -192,6 +193,9 @@ void InputManager::handleMainConsoleInput()
                 << "    - help                  (displays list of commands)" << endl
                 << "    - exit                  (exits the emulator)" << RESET << endl;
         }
+        else if (command == "memory") {
+            FlatMemoryAllocator::getInstance()->printMemoryInfo(ConsoleManager::getInstance()->getTimeSlice());
+        }
         else if (command == "screen") {
             if (tokens.size() > 1) {
                 string screenCommand = tokens[1];
@@ -203,7 +207,7 @@ void InputManager::handleMainConsoleInput()
                     }
                     else {
                         string timestamp = ConsoleManager::getInstance()->getCurrentTimestamp();
-                        auto screenInstance = std::make_shared<Screen>(processName, 0, timestamp);
+                        auto screenInstance = std::make_shared<Screen>(processName, 0, timestamp, ConsoleManager::getInstance()->getMemPerProc());
                         ConsoleManager::getInstance()->registerConsole(screenInstance);
 
                         ConsoleManager::getInstance()->switchConsole(processName);

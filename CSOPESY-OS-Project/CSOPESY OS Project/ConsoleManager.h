@@ -49,6 +49,9 @@ public:
 	void setMaxIns(int maxIns);
 	void setDelayPerExec(int delayPerExec);
 	void initializeConfiguration();
+	void setMaxOverallMem(size_t maxOverallMem);
+	void setMemPerFrame(size_t memPerFrame);
+	void setMemPerProc(size_t memPerProc);
 
 	int getNumCpu();
 	string getSchedulerConfig();
@@ -59,6 +62,9 @@ public:
 	int getDelayPerExec();
 	void printProcessSmi(); 
 	int getCpuCycles();
+	size_t getMaxOverallMem();
+	size_t getMemPerFrame();
+	size_t getMemPerProc();
 
 	void exitApplication();
 	bool isRunning();
@@ -84,7 +90,9 @@ private:
 	int maxIns = 0;
 	int delayPerExec = 0;
 	int cpuCycles = 0;
-
+	size_t maxOverallMem = 0;
+	size_t memPerFrame = 0;
+	size_t memPerProc = 0;
 
 	// declare consoles 
 	std::shared_ptr<BaseScreen> currentConsole;
