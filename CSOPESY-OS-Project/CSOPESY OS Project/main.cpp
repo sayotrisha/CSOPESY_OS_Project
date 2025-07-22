@@ -27,42 +27,34 @@ using namespace std;
 #include "BaseScreen.h"
 #include "MainScreen.h"
 #include "Scheduler.h"
+#include "FlatMemoryAllocator.h"
 #include <fstream>
 #include <random>
-#include "Colors.h"
 
-/*--------------------------------------------------------------------
- |  Function main()
- |
- |  Purpose:  Entry point of the simulation. Sets up the ConsoleManager
- |      and InputManager, registers the main screen, and enters a loop to
- |      continuously handle user input until the application exits.
- |
- |  Parameters: None
- |
- |  Returns:  int -- exit status (0 indicates normal program termination)
- *-------------------------------------------------------------------*/
+
+
 int main()
 {
     ConsoleManager::initialize();
-	InputManager::initialize();
-    
-    // register main screen
+    InputManager::initialize();
+
     shared_ptr<BaseScreen> mainScreen = make_shared<MainScreen>(MAIN_CONSOLE);
 
     ConsoleManager::getInstance()->registerConsole(mainScreen);
     ConsoleManager::getInstance()->setCurrentConsole(mainScreen);
-    
+
     bool running = true;
     ConsoleManager::getInstance()->drawConsole();
-    ConsoleManager::getInstance()->printMarquee();
 
-    while (running){
+    const size_t maximumMemorySize = 16384;
+    FlatMemoryAllocator::initialize(maximumMemorySize);
+
+    while (running) {
         InputManager::getInstance()->handleMainConsoleInput();
         running = ConsoleManager::getInstance()->isRunning();
     }
-    
-	InputManager::getInstance()->destroy();
+
+    InputManager::getInstance()->destroy();
     ConsoleManager::getInstance()->destroy();
 
     return 0;

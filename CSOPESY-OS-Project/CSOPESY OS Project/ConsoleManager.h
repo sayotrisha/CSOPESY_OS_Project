@@ -9,7 +9,7 @@
 const string MAIN_CONSOLE = "MAIN_CONSOLE";
 
 class ConsoleManager
-{	
+{
 public:
 	enum ProcessState
 	{
@@ -29,7 +29,6 @@ public:
 	static ConsoleManager* getInstance();
 
 	void printHeader();
-	void printMarquee();
 	void drawConsole();
 	void destroy();
 	string getCurrentTimestamp();
@@ -50,6 +49,10 @@ public:
 	void setDelayPerExec(int delayPerExec);
 	void initializeConfiguration();
 
+	void setMaxOverallMem(size_t maxOverallMem);
+	void setMemPerFrame(size_t memPerFrame);
+	void setMemPerProc(size_t memPerProc);
+
 	int getNumCpu();
 	string getSchedulerConfig();
 	int getTimeSlice();
@@ -57,8 +60,11 @@ public:
 	int getMinIns();
 	int getMaxIns();
 	int getDelayPerExec();
-	void printProcessSmi(); 
+	void printProcessSmi();
 	int getCpuCycles();
+	size_t getMaxOverallMem();
+	size_t getMemPerFrame();
+	size_t getMemPerProc();
 
 	void exitApplication();
 	bool isRunning();
@@ -84,6 +90,9 @@ private:
 	int maxIns = 0;
 	int delayPerExec = 0;
 	int cpuCycles = 0;
+	size_t maxOverallMem = 0;
+	size_t memPerFrame = 0;
+	size_t memPerProc = 0;
 
 
 	// declare consoles 

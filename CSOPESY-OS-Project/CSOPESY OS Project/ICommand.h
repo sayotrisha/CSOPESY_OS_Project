@@ -5,11 +5,7 @@ public:
 	enum CommandType
 	{
 		IO,
-		PRINT,
-		DECLARE,
-		ADD,
-		SUBTRACT,
-		SLEEP
+		PRINT
 	};
 
 	ICommand(int pid, CommandType commandType);

@@ -1,102 +1,35 @@
-/**
- *  InputManager.cpp
- *
- *  Purpose:
- *      This file implements the InputManager class, which handles all
- *      user input for the console-based OS simulation. It processes commands,
- *      delegates actions to ConsoleManager, and controls simulation features
- *      like initialization, screen creation, and scheduler interaction.
- *
- *      InputManager ensures command parsing, validation, and execution,
- *      supporting both main screen and process-specific command scopes.
- */
 using namespace std;
 
 #include "InputManager.h"
 #include <iostream>
 #include "ConsoleManager.h"
+#include "FlatMemoryAllocator.h"
 #include "Screen.h"
 #include "Colors.h"
 
-/*-------------------------------------------------------------------
- |
- |  Purpose:  Default constructor for the InputManager class.
- |      Initializes an InputManager instance. This constructor is typically
- |      called through initialize().
- |
- |  Parameters: None
- |
- |  Returns:  Nothing
- *-------------------------------------------------------------------*/
 InputManager::InputManager()
 {
 }
 
-/*------------------------------------------------- Static Instance -----
- |  Declaration: InputManager* InputManager::inputManager = inputManager;
- |
- |  Purpose:  Static member to hold the singleton instance of InputManager.
- |      Ensures only one global input handler exists throughout the program.
- |
- |  Comments: stores the created instance of console manager
- *-------------------------------------------------------------------*/
+// stores the created instance of console manager
 InputManager* InputManager::inputManager = inputManager;
 
-/*--------------------------------------------------------------------
- |  Function initialize()
- |
- |  Purpose:  Instantiates the singleton InputManager. Must be called before
- |      handling user input.
- |
- |  Parameters: None
- |
- |  Returns:  Nothing
- *-------------------------------------------------------------------*/
+
 void InputManager::initialize()
 {
-	inputManager = new InputManager();
+    inputManager = new InputManager();
 }
 
-/*------------------------------------------------------------------
- |  Function destroy()
- |
- |  Purpose:  Deallocates the InputManager singleton instance.
- |      Called when the application exits to clean up resources.
- |
- |  Parameters: None
- |
- |  Returns:  Nothing
- *-------------------------------------------------------------------*/
 void InputManager::destroy()
 {
-	delete inputManager;
+    delete inputManager;
 }
 
-/*---------------------------------------------------------------------
- |  Function getInstance()
- |
- |  Purpose:  Returns the singleton instance of the InputManager.
- |
- |  Parameters: None
- |
- |  Returns:  InputManager* -- pointer to the global InputManager instance.
- *-------------------------------------------------------------------*/
 InputManager* InputManager::getInstance()
 {
-	return inputManager;
+    return inputManager;
 }
 
-/*---------------------------------------------------------------------
- |  Function handleMainConsoleInput()
- |
- |  Purpose:  Reads user input from the command line and parses it into tokens.
- |      Interprets and executes commands depending on whether the current
- |      screen is the main console or a process screen.
- |
- |  Parameters: None
- |
- |  Returns:  Nothing
- *-------------------------------------------------------------------*/
 void InputManager::handleMainConsoleInput()
 {
     cout << "root:\\> ";
@@ -104,13 +37,13 @@ void InputManager::handleMainConsoleInput()
     getline(cin, input); // Capture entire line input
 
     // Convert input to lowercase
-    for (char &c : input) {
+    for (char& c : input) {
         c = tolower(c);
     }
 
     // Split input by spaces
     istringstream iss(input);
-    vector<string> tokens{istream_iterator<string>{iss}, istream_iterator<string>{}};
+    vector<string> tokens{ istream_iterator<string>{iss}, istream_iterator<string>{} };
 
     if (tokens.empty()) {
         cout << "No command entered." << endl;
@@ -135,7 +68,7 @@ void InputManager::handleMainConsoleInput()
             Scheduler::getInstance()->initialize(ConsoleManager::getInstance()->getNumCpu());
             std::thread schedulerThread([&] {
                 Scheduler::getInstance()->start();
-            });
+                });
             schedulerThread.detach();
 
             cout << GREEN << "> Processor Configuration Initialized" << RESET << endl;
@@ -151,10 +84,10 @@ void InputManager::handleMainConsoleInput()
                 Scheduler::getInstance()->setSchedulerTestRunning(true);
                 // create batchProcessFrequency number of processes
                 std::thread schedulerTestThread([&] {
-					ConsoleManager::getInstance()->schedulerTest();
+                    ConsoleManager::getInstance()->schedulerTest();
                     });
                 schedulerTestThread.detach();
-               
+
             }
             else {
                 cout << YELLOW << "> Scheduler Test already running" << RESET << endl;
@@ -192,6 +125,9 @@ void InputManager::handleMainConsoleInput()
                 << "    - help                  (displays list of commands)" << endl
                 << "    - exit                  (exits the emulator)" << RESET << endl;
         }
+        else if (command == "memory") {
+            FlatMemoryAllocator::getInstance()->printMemoryInfo(ConsoleManager::getInstance()->getTimeSlice());
+        }
         else if (command == "screen") {
             if (tokens.size() > 1) {
                 string screenCommand = tokens[1];
@@ -203,7 +139,7 @@ void InputManager::handleMainConsoleInput()
                     }
                     else {
                         string timestamp = ConsoleManager::getInstance()->getCurrentTimestamp();
-                        auto screenInstance = std::make_shared<Screen>(processName, 0, timestamp);
+                        auto screenInstance = std::make_shared<Screen>(processName, 0, timestamp, ConsoleManager::getInstance()->getMemPerProc());
                         ConsoleManager::getInstance()->registerConsole(screenInstance);
 
                         ConsoleManager::getInstance()->switchConsole(processName);
@@ -212,9 +148,7 @@ void InputManager::handleMainConsoleInput()
                     }
                 }
                 else if (screenCommand == "-r" && !processName.empty()) {
-                    //cin >> processName;
-
-                    //// Check if screen exists before switching
+                    // Check if screen exists before switching
                     auto screenMap = ConsoleManager::getInstance()->getScreenMap();
                     if (screenMap.find(processName) != screenMap.end()) {
                         ConsoleManager::getInstance()->switchConsole(processName);
@@ -225,9 +159,7 @@ void InputManager::handleMainConsoleInput()
                     }
                 }
                 else if (screenCommand == "-ls") {
-                    // List all active sessions
                     system("cls");
-
                     ConsoleManager::getInstance()->drawConsole();
                     cout << "root:\\> screen -ls" << endl;
                     ConsoleManager::getInstance()->displayProcessList();
@@ -261,4 +193,4 @@ void InputManager::handleMainConsoleInput()
     }
 }
 
-    
+

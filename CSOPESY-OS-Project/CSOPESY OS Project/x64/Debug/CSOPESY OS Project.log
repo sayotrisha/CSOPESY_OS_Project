@@ -1,2 +1,5 @@
-﻿  ConsoleManager.cpp
+﻿  DeclareCommand.cpp
+  FlatMemoryAllocator.cpp
+  main.cpp
+  Generating Code...
   CSOPESY OS Project.vcxproj -> D:\Documents\School\STINTSY\CSOPESY_OS_Project\CSOPESY-OS-Project\x64\Debug\CSOPESY OS Project.exe
