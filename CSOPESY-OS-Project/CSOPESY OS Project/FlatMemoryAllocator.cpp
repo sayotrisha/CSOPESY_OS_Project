@@ -38,12 +38,11 @@ void* FlatMemoryAllocator::allocate(size_t size, string process) {
 		for (size_t i = 0; i < maximumSize - size + 1; ++i) {
 			// Check if the memory block is available
 			if (allocationMap.find(i) == allocationMap.end() || allocationMap[i].empty()) {
-				if (canAllocateAt(i, size)) {
+				if (canAllocateAt(i, size) && i + size <= maximumSize) {
 					// Ensure that the requested block doesn't go out of bounds
-					if (i + size <= maximumSize) {
-						allocateAt(i, size, process);
-						return &memory[i];  // Return pointer to allocated memory
-					}
+					allocateAt(i, size, process);
+					return &memory[i];  // Return pointer to allocated memory
+					
 				}
 			}
 		}
@@ -109,9 +108,10 @@ void FlatMemoryAllocator::deallocateAt(size_t index) {
 void FlatMemoryAllocator::printMemoryInfo(int quantum_size) {
 	static int curr_quantum_cycle = 0;  // Counter for unique file naming
 	curr_quantum_cycle = curr_quantum_cycle + quantum_size;
+	//curr_quantum_cycle = curr_quantum_cycle++;
 
 	// Create a unique filename for each call
-	std::string filename = "memory_stamp_" + std::to_string(curr_quantum_cycle) + ".txt";
+	std::string filename = "memory_files/memory_stamp_" + std::to_string(curr_quantum_cycle) + ".txt";
 	std::ofstream outFile(filename);  // Open a uniquely named file for writing
 
 	if (!outFile) {  // Check if the file was successfully opened
@@ -121,30 +121,40 @@ void FlatMemoryAllocator::printMemoryInfo(int quantum_size) {
 
 	string timestamp = ConsoleManager::getInstance()->getCurrentTimestamp();
 	size_t numProcessesInMemory = FlatMemoryAllocator::getInstance()->getNumberOfProcessesInMemory();
+	size_t memPerProc = ConsoleManager::getInstance()->getMemPerProc();
 
 	// Print the information to the file
-	outFile << "Timestamp: " << timestamp << "\n";
+	outFile << "Timestamp: " << "(" << timestamp << ")" << "\n";
 	outFile << "Number of processes in memory: " << numProcessesInMemory << "\n";
+	outFile << "Memory per process: " << memPerProc << " KB\n";
 	outFile << "Total External fragmentation in KB: " << calculateExternalFragmentation() << "\n\n";
-	outFile << "----end---- = " << maximumSize << "\n\n";
+	outFile << "---- end ---- = " << maximumSize << "\n\n";
 
 	std::string currentProcessName = "";
 	std::string incomingProcessName = "";
+	std::string currentProcess = allocationMap[maximumSize - 1];
+	int upper = maximumSize;
 
 	for (size_t i = maximumSize - 1; i > 0; i--) {
 		incomingProcessName = allocationMap[i];
+		//outFile << incomingProcessName << " - " << i + 1 << "\n";
 		if (currentProcessName.empty() && !incomingProcessName.empty()) {
 			currentProcessName = incomingProcessName;
+			//outFile << currentProcessName << "\n" << i - 1 << "\n\n\n";
 			outFile << i + 1 << "\n" << currentProcessName << "\n";
 		}
 		else if (currentProcessName != incomingProcessName) {
-			outFile << i + 1 << "\n";
+			outFile << i + 1 << "\n\n\n";
 			currentProcessName = incomingProcessName;
 			outFile << currentProcessName << "\n";
-		}
-		else if (incomingProcessName.empty() && i == maximumSize - 1) {
 			outFile << i + 1 << "\n";
 		}
+		/*	This is prints the starting address	*/
+		else if (i == 1) {
+			outFile << i - 1 << "\n\n\n";
+		}
+		
+
 	}
 	outFile << "----start---- = 0\n";
 

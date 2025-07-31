@@ -20,6 +20,7 @@ void ConsoleManager::initialize() {
 
 void ConsoleManager::initializeConfiguration() {
     FILE* file;
+    /*   This gets the input configuration from the config.txt file   */
     errno_t err = fopen_s(&file, "config.txt", "r");
     if (err != 0) {
         cout << "Error opening file" << endl;
@@ -261,7 +262,7 @@ void ConsoleManager::reportUtil() {
 
     logStream << "-----------------------------------" << std::endl;
 
-    // Write the log data to a file
+	// Write the log data to a file in text_files directory
     std::ofstream file("text_files/csopesy-log.txt", std::ios::out);
     if (file.is_open()) {
         file << logStream.str(); // Write log contents to file

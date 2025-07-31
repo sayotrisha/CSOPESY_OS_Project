@@ -29,6 +29,10 @@ public:
 	void setTimestampFinished(string timestampFinished);
 	void setMemoryRequired(size_t memoryRequired);
 
+	void setInMemory(bool inMemory);
+
+	bool isInMemory() const;
+
 
 	void executeCurrentCommand();
 	void moveToNextLine();
@@ -52,6 +56,7 @@ public:
 private:
 	string processName;
 	int currentLine;
+	bool inMemory;
 	int totalLine;
 	int commandCounter;
 	int cpuCoreID = -1;

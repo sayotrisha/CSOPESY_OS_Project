@@ -135,7 +135,7 @@ void Screen::setCPUCoreID(int coreID)
 
 void Screen::createFile()
 {
-	string fileName = this->processName + ".txt";
+	string fileName = "process_files/" + this->processName + ".txt";
 	fstream file;
 	//create file if it doesnt exit
 	file.open(fileName, std::ios::out | std::ios::trunc);
@@ -145,7 +145,7 @@ void Screen::createFile()
 
 void Screen::viewFile()
 {
-	string fileName = this->processName + ".txt";
+	string fileName = "process_files/" + this->processName + ".txt";
 	fstream file;
 	file.open(fileName, std::ios::in);
 	std::string line;
@@ -165,4 +165,12 @@ size_t Screen::getMemoryRequired() const
 void Screen::setMemoryRequired(size_t memoryRequired)
 {
 	this->memoryRequired = memoryRequired;
+}
+
+void Screen::setInMemory(bool inMemory) {
+	this->inMemory = inMemory;
+}
+
+bool Screen::isInMemory() const {
+	return this->inMemory;
 }
