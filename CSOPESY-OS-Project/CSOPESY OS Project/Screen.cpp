@@ -23,6 +23,7 @@ Screen::Screen(string processName, int currentLine, string timestamp, size_t mem
 	this->memoryRequired = memoryRequired;
 	this->timestamp = timestamp;
 
+	this->numPages = ConsoleManager::getInstance()->getNumPages();
 
 	// create 100 print commands
 	for (int i = 0; i < totalLine; i++) {
@@ -30,12 +31,27 @@ Screen::Screen(string processName, int currentLine, string timestamp, size_t mem
 
 	}
 
-	/*
-	for(int i = 0; i < this->printCommands.size(); i++){
-		this->printCommands[i].execute();
-		std::this_thread::sleep_for(std::chrono::milliseconds(500));
-	}*/
 
+}
+
+void Screen::setMemoryUsage(size_t memoryUsage)
+{
+	this->memoryUsage = memoryUsage;
+}
+
+size_t Screen::getMemoryUsage() const
+{
+	return this->memoryUsage;
+}
+
+void Screen::setIsRunning(bool isRunning)
+{
+	this->isRunning = isRunning;
+}
+
+bool Screen::getIsRunning() const
+{
+	return this->isRunning;
 }
 
 void Screen::setRandomIns() {
@@ -93,6 +109,16 @@ string Screen::getTimestampFinished() {
 	return timestampFinished;
 }
 
+size_t Screen::getNumPages()
+{
+	return this->numPages;
+}
+
+void Screen::setNumPages(size_t numPages)
+{
+	this->numPages = numPages;
+}
+
 void Screen::setTimestampFinished(string timestampFinished) {
 	this->timestampFinished = timestampFinished;
 }
@@ -135,7 +161,7 @@ void Screen::setCPUCoreID(int coreID)
 
 void Screen::createFile()
 {
-	string fileName = "process_files/" + this->processName + ".txt";
+	string fileName = this->processName + ".txt";
 	fstream file;
 	//create file if it doesnt exit
 	file.open(fileName, std::ios::out | std::ios::trunc);
@@ -145,7 +171,7 @@ void Screen::createFile()
 
 void Screen::viewFile()
 {
-	string fileName = "process_files/" + this->processName + ".txt";
+	string fileName = this->processName + ".txt";
 	fstream file;
 	file.open(fileName, std::ios::in);
 	std::string line;
@@ -165,12 +191,4 @@ size_t Screen::getMemoryRequired() const
 void Screen::setMemoryRequired(size_t memoryRequired)
 {
 	this->memoryRequired = memoryRequired;
-}
-
-void Screen::setInMemory(bool inMemory) {
-	this->inMemory = inMemory;
-}
-
-bool Screen::isInMemory() const {
-	return this->inMemory;
 }

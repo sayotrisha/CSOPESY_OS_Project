@@ -28,11 +28,7 @@ public:
 	void setTimestamp(string timestamp);
 	void setTimestampFinished(string timestampFinished);
 	void setMemoryRequired(size_t memoryRequired);
-
-	void setInMemory(bool inMemory);
-
-	bool isInMemory() const;
-
+	void setNumPages(size_t numPages);
 
 	void executeCurrentCommand();
 	void moveToNextLine();
@@ -44,6 +40,10 @@ public:
 	void viewFile();
 	void setRandomIns();
 	size_t getMemoryRequired() const;
+	void setMemoryUsage(size_t memoryUsage);
+	size_t getMemoryUsage() const;
+	void setIsRunning(bool isRunning);
+	bool getIsRunning() const;
 
 	ProcessState getState() const;
 
@@ -52,18 +52,21 @@ public:
 	int getTotalLine() override;
 	string getTimestamp() override;
 	string getTimestampFinished();
+	size_t getNumPages();
 
 private:
 	string processName;
 	int currentLine;
-	bool inMemory;
 	int totalLine;
 	int commandCounter;
 	int cpuCoreID = -1;
+	size_t numPages;
 	string timestamp;
+	bool isRunning = false;
 	string timestampFinished;
 	std::vector<PrintCommand> printCommands;
 	ProcessState currentState;
 	size_t memoryRequired;
+	size_t memoryUsage;
 
 };

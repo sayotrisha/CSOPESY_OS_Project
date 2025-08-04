@@ -6,6 +6,7 @@ using namespace std;
 #include "FlatMemoryAllocator.h"
 #include "Screen.h"
 #include "Colors.h"
+#include "PagingAllocator.h"
 
 InputManager::InputManager()
 {
@@ -128,6 +129,20 @@ void InputManager::handleMainConsoleInput()
         else if (command == "memory") {
             FlatMemoryAllocator::getInstance()->printMemoryInfo(ConsoleManager::getInstance()->getTimeSlice());
         }
+        else if (command == "vmstat") {
+            if (ConsoleManager::getInstance()->getMinMemPerProc() == ConsoleManager::getInstance()->getMaxMemPerProc()) {
+                size_t memoryUsage = FlatMemoryAllocator::getInstance()->getTotalMemoryUsage();
+            }
+            else {
+                size_t usedFrames = PagingAllocator::getInstance()->calculateUsedFrames();
+                PagingAllocator::getInstance()->setUsedMemory(usedFrames * ConsoleManager::getInstance()->getMemPerFrame());
+            }
+
+            ConsoleManager::getInstance()->printVmstat();
+        }
+        else if (command == "process-smi") {
+            ConsoleManager::getInstance()->printProcessSmi();
+        }
         else if (command == "screen") {
             if (tokens.size() > 1) {
                 string screenCommand = tokens[1];
@@ -139,7 +154,7 @@ void InputManager::handleMainConsoleInput()
                     }
                     else {
                         string timestamp = ConsoleManager::getInstance()->getCurrentTimestamp();
-                        auto screenInstance = std::make_shared<Screen>(processName, 0, timestamp, ConsoleManager::getInstance()->getMemPerProc());
+                        auto screenInstance = std::make_shared<Screen>(processName, 0, timestamp, ConsoleManager::getInstance()->getMinMemPerProc());
                         ConsoleManager::getInstance()->registerConsole(screenInstance);
 
                         ConsoleManager::getInstance()->switchConsole(processName);

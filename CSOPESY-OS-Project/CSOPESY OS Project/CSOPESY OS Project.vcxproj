@@ -136,6 +136,7 @@
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainScreen.cpp" />
+    <ClCompile Include="PagingAllocator.cpp" />
     <ClCompile Include="PrintCommand.cpp" />
     <ClCompile Include="Scheduler.cpp" />
     <ClCompile Include="Screen.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="ICommand.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="MainScreen.h" />
+    <ClInclude Include="PagingAllocator.h" />
     <ClInclude Include="PrintCommand.h" />
     <ClInclude Include="Scheduler.h" />
     <ClInclude Include="Screen.h" />
