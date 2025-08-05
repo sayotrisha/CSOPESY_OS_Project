@@ -1,0 +1,15 @@
+Process name: p1
+Logs: 
+
+(08/05/2025, 08:28:42 PM)  Core: 0 "Hello world from p1!"
+(08/05/2025, 08:28:43 PM)  Core: 0 "Hello world from p1!"
+(08/05/2025, 08:28:43 PM)  Core: 0 "Hello world from p1!"
+(08/05/2025, 08:28:44 PM)  Core: 0 "Hello world from p1!"
+(08/05/2025, 08:28:44 PM)  Core: 0 "Hello world from p1!"
+(08/05/2025, 08:28:45 PM)  Core: 0 "Hello world from p1!"
+(08/05/2025, 08:28:45 PM)  Core: 0 "Hello world from p1!"
+(08/05/2025, 08:28:46 PM)  Core: 0 "Hello world from p1!"
+(08/05/2025, 08:28:46 PM)  Core: 0 "Hello world from p1!"
+(08/05/2025, 08:28:46 PM)  Core: 0 "Hello world from p1!"
+(08/05/2025, 08:28:47 PM)  Core: 0 "Hello world from p1!"
+(08/05/2025, 08:28:47 PM)  Core: 0 "Hello world from p1!"

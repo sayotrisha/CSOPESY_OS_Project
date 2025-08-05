@@ -149,18 +149,109 @@ void InputManager::handleMainConsoleInput()
                 string processName = (tokens.size() > 2) ? tokens[2] : "";
 
                 if (screenCommand == "-s" && !processName.empty()) {
+                    if (tokens.size() < 4) {
+                        cout << RED << "> Error: Usage is screen -s <process_name> <process_memory_size>" << RESET << endl;
+                        return;
+                    }
+
+                    string processName = tokens[2];
+                    string memSizeStr = tokens[3];
+
+                    // Check if memory size is a valid integer
+                    int memorySize;
+                    try {
+                        memorySize = std::stoi(memSizeStr);
+                        if (memorySize <= 0) {
+                            cout << RED << "> Error: Memory size must be a positive integer." << RESET << endl;
+                            return;
+                        }
+                    }
+                    catch (...) {
+                        cout << RED << "> Error: Invalid memory size." << RESET << endl;
+                        return;
+                    }
+
                     if (ConsoleManager::getInstance()->getScreenMap().contains(processName)) {
                         cout << RED << "> Error: Process already exists." << RESET << endl;
                     }
                     else {
                         string timestamp = ConsoleManager::getInstance()->getCurrentTimestamp();
-                        auto screenInstance = std::make_shared<Screen>(processName, 0, timestamp, ConsoleManager::getInstance()->getMinMemPerProc());
+                        auto screenInstance = std::make_shared<Screen>(processName, 0, timestamp, memorySize);
                         ConsoleManager::getInstance()->registerConsole(screenInstance);
 
                         ConsoleManager::getInstance()->switchConsole(processName);
                         ConsoleManager::getInstance()->drawConsole();
                         Scheduler::getInstance()->addProcessToQueue(screenInstance);
                     }
+                }
+                else if (screenCommand == "-c") {
+                    if (tokens.size() < 5) {
+                        cout << RED << "> Error: Usage is screen -c <process_name> <process_memory_size> \"<instructions>\"" << RESET << endl;
+                        return;
+                    }
+
+                    string processName = tokens[2];
+                    //string memSizeStr = tokens[3];
+
+                    /*int memorySize;
+                    try {
+                        memorySize = std::stoi(memSizeStr);
+                        if (memorySize <= 0) {
+                            cout << RED << "> Error: Memory size must be a positive integer." << RESET << endl;
+                            return;
+                        }
+                    }
+                    catch (...) {
+                        cout << RED << "> Error: Invalid memory size. Must be an integer." << RESET << endl;
+                        return;
+                    }*/
+
+                    // Join all remaining tokens from tokens[4] onward (in case the instruction string has spaces)
+                    string instructionStr;
+                    for (size_t i = 3; i < tokens.size(); ++i) {
+                        if (i > 3) instructionStr += " ";
+                        instructionStr += tokens[i];
+                    }
+
+                    // Remove surrounding quotes if they exist
+                    if (instructionStr.front() == '"' && instructionStr.back() == '"') {
+                        instructionStr = instructionStr.substr(1, instructionStr.size() - 2);
+                    }
+
+                    // Split instructions by semicolon
+                    std::vector<std::string> instructions;
+                    std::stringstream ss(instructionStr);
+                    std::string instruction;
+
+                    while (std::getline(ss, instruction, ';')) {
+                        if (!instruction.empty()) {
+                            instructions.push_back(instruction);
+                        }
+                    }
+
+                    if (instructions.size() < 1 || instructions.size() > 50) {
+                        cout << RED << "> Error: Invalid command. Instruction count must be between 1 and 50." << RESET << endl;
+                        return;
+                    }
+
+                    // Check if process already exists
+                    if (ConsoleManager::getInstance()->getScreenMap().contains(processName)) {
+                        cout << RED << "> Error: Process already exists." << RESET << endl;
+                        return;
+                    }
+
+                    // Create screen instance with instructions
+                    string timestamp = ConsoleManager::getInstance()->getCurrentTimestamp();
+                    auto screenInstance = std::make_shared<Screen>(processName, 0, timestamp, ConsoleManager::getInstance()->getMinMemPerProc());
+
+                    // Load instructions into the screen (assuming you have such a method)
+                    //screenInstance->loadInstructions(instructions);
+
+                    // Register and run process
+                    ConsoleManager::getInstance()->registerConsole(screenInstance);
+                    ConsoleManager::getInstance()->switchConsole(processName);
+                    ConsoleManager::getInstance()->drawConsole();
+                    Scheduler::getInstance()->addProcessToQueue(screenInstance);
                 }
                 else if (screenCommand == "-r" && !processName.empty()) {
                     // Check if screen exists before switching
