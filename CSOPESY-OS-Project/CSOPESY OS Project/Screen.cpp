@@ -192,3 +192,11 @@ void Screen::setMemoryRequired(size_t memoryRequired)
 {
 	this->memoryRequired = memoryRequired;
 }
+
+void Screen::loadInstructions(const std::vector<std::string>& instr) {
+	instructions = instr;
+}
+
+const std::vector<std::string>& Screen::getInstructions() const {
+	return instructions;
+}

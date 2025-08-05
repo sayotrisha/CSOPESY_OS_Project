@@ -44,6 +44,9 @@ public:
 	size_t getMemoryUsage() const;
 	void setIsRunning(bool isRunning);
 	bool getIsRunning() const;
+	void loadInstructions(const std::vector<std::string>& instr);
+	const std::vector<std::string>& getInstructions() const;
+
 
 	ProcessState getState() const;
 
@@ -68,5 +71,5 @@ private:
 	ProcessState currentState;
 	size_t memoryRequired;
 	size_t memoryUsage;
-
+	std::vector<std::string> instructions;
 };

@@ -191,20 +191,6 @@ void InputManager::handleMainConsoleInput()
                     }
 
                     string processName = tokens[2];
-                    //string memSizeStr = tokens[3];
-
-                    /*int memorySize;
-                    try {
-                        memorySize = std::stoi(memSizeStr);
-                        if (memorySize <= 0) {
-                            cout << RED << "> Error: Memory size must be a positive integer." << RESET << endl;
-                            return;
-                        }
-                    }
-                    catch (...) {
-                        cout << RED << "> Error: Invalid memory size. Must be an integer." << RESET << endl;
-                        return;
-                    }*/
 
                     // Join all remaining tokens from tokens[4] onward (in case the instruction string has spaces)
                     string instructionStr;
@@ -245,7 +231,7 @@ void InputManager::handleMainConsoleInput()
                     auto screenInstance = std::make_shared<Screen>(processName, 0, timestamp, ConsoleManager::getInstance()->getMinMemPerProc());
 
                     // Load instructions into the screen (assuming you have such a method)
-                    //screenInstance->loadInstructions(instructions);
+                    screenInstance->loadInstructions(instructions);
 
                     // Register and run process
                     ConsoleManager::getInstance()->registerConsole(screenInstance);
@@ -259,6 +245,20 @@ void InputManager::handleMainConsoleInput()
                     if (screenMap.find(processName) != screenMap.end()) {
                         ConsoleManager::getInstance()->switchConsole(processName);
                         ConsoleManager::getInstance()->drawConsole();
+
+                        std::shared_ptr<BaseScreen> baseScreen = screenMap[processName];
+                        std::shared_ptr<Screen> screen = std::dynamic_pointer_cast<Screen>(baseScreen);
+
+                        if (screen) {
+                            const auto& instrList = screen->getInstructions();
+                            std::cout << "Instructions for " << processName << ":" << std::endl;
+                            for (const auto& instr : instrList) {
+                                std::cout << instr << std::endl;
+                            }
+                        }
+                        else {
+                            std::cout << RED << "> Error: Screen exists but is not of type Screen." << RESET << std::endl;
+                        }
                     }
                     else {
                         cout << RED << "> Error: Screen with name '" << processName << "' does not exist or was not initialized." << RESET << endl;
