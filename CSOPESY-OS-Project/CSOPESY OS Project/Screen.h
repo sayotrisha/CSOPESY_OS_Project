@@ -29,7 +29,6 @@ public:
 	void setTimestampFinished(string timestampFinished);
 	void setMemoryRequired(size_t memoryRequired);
 	void setNumPages(size_t numPages);
-
 	void executeCurrentCommand();
 	void moveToNextLine();
 	bool isFinished() const;
@@ -44,9 +43,7 @@ public:
 	size_t getMemoryUsage() const;
 	void setIsRunning(bool isRunning);
 	bool getIsRunning() const;
-
 	ProcessState getState() const;
-
 	string getProcessName() override;
 	int getCurrentLine() override;
 	int getTotalLine() override;

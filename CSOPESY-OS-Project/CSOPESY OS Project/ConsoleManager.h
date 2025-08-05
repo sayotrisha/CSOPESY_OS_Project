@@ -29,17 +29,16 @@ public:
 	static ConsoleManager* getInstance();
 
 	void printHeader();
+	void printMarquee();
 	void drawConsole();
 	void destroy();
 	string getCurrentTimestamp();
 	std::unordered_map<string, std::shared_ptr<BaseScreen>> getScreenMap();
-
 	void registerConsole(std::shared_ptr<BaseScreen> screenRef);
 	void switchConsole(string consoleName);
 	std::shared_ptr<BaseScreen> getCurrentConsole();
 	void setInitialized(bool initialized);
 	bool getInitialized();
-
 	void setNumCpu(int num_cpu);
 	void setSchedulerConfig(string schedulerConfig);
 	void setTimeSlice(int timeSlice);
@@ -49,10 +48,8 @@ public:
 	void setDelayPerExec(int delayPerExec);
 	void initializeConfiguration();
 	void initializeAllocators();
-
 	std::shared_ptr<Screen> getScreenByProcessName(const std::string& processName);
 	std::unordered_map<std::string, std::shared_ptr<Screen>> processNameToScreenMap;
-
 	void setMaxOverallMem(size_t maxOverallMem);
 	void setMemPerFrame(size_t memPerFrame);
 	void setMinMemPerProc(size_t minMemPerProc);

@@ -91,7 +91,6 @@ void ConsoleManager::schedulerTest() {
     while (Scheduler::getInstance()->getSchedulerTestRunning()) {
         for (int i = 0; i < ConsoleManager::getInstance()->getBatchProcessFrequency(); i++) {
             process_counter++;
-            /* string processName = "cycle" + std::to_string(ConsoleManager::getInstance()->cpuCycles) + "processName" + std::to_string(i);*/
             string processName = "P" + std::to_string(process_counter);
             shared_ptr<BaseScreen> processScreen = make_shared<Screen>(processName, 0, ConsoleManager::getInstance()->getCurrentTimestamp(), ConsoleManager::getInstance()->getMinMemPerProc());
             shared_ptr<Screen> screenPtr = static_pointer_cast<Screen>(processScreen);
@@ -120,11 +119,11 @@ void ConsoleManager::drawConsole() {
         }
         else {
             if (this->screenMap.contains(consoleName)) {
-                cout << "Screen Name: " << this->screenMap[consoleName]->getConsoleName() << endl;
+                cout << "Screen Name: " << YELLOW << this->screenMap[consoleName]->getConsoleName() << RESET << endl;
                 cout << "Current line of instruction / Total line of instruction: ";
-                cout << this->screenMap[consoleName]->getCurrentLine();
-                cout << "/" << this->screenMap[consoleName]->getTotalLine() << endl;
-                cout << "Timestamp: " << this->screenMap[consoleName]->getTimestamp() << endl;
+                cout << YELLOW << this->screenMap[consoleName]->getCurrentLine() << RESET;
+                cout << BLUE << "/" << RESET << YELLOW << this->screenMap[consoleName]->getTotalLine() << RESET << endl;
+                cout << "Timestamp: " << YELLOW <<  this->screenMap[consoleName]->getTimestamp() << RESET << endl;
             }
         }
     }
@@ -151,7 +150,6 @@ string ConsoleManager::getCurrentTimestamp() {
 
 void ConsoleManager::registerConsole(shared_ptr<BaseScreen> screenRef) {
     this->screenMap[screenRef->getConsoleName()] = screenRef; //it should accept MainScreen and ProcessScreen
-    //system("cls");
 }
 
 void ConsoleManager::switchConsole(string consoleName)
@@ -391,7 +389,6 @@ void ConsoleManager::printProcess(string enteredProcess) {
                 cout << "Logs:" << endl;
                 cout << "(" << screenPtr->getTimestamp() << ")  "
                     << "Core: " << coreIDstr << "  " << RESET;
-                //where to put createfile?
                 screenPtr->createFile();
                 screenPtr->viewFile();
             }
@@ -552,4 +549,38 @@ void ConsoleManager::printHeader() {
     cout << " `-----'`-----'  `-----' `--'     `------'`-----'   `--'     \n";
     cout << "________________________________________________________________________________\n" << RESET;
     cout << "\n";
+}
+
+void ConsoleManager::printMarquee() {
+    std::string text = "Welcome to our Command Line Emulator!!! ";
+    int len = static_cast<int>(text.size());
+
+    // Marquee effect: one full cycle
+    for (int offset = 0; offset < len; ++offset) {
+        // Move cursor to beginning of line
+        cout << "\r";
+
+        // Print substring starting at offset
+        cout << PASTEL_PINK << text.substr(offset);
+
+        // Then print the leading part to complete the loop
+        cout << text.substr(0, offset) << RESET;
+
+        cout.flush();
+
+        // Sleep using std::this_thread::sleep_for
+        this_thread::sleep_for(std::chrono::milliseconds(200));
+    }
+    cout << CYAN << "\n> List of commands:" << endl
+        << "    - initialize            (initializes processor configuration and scheduler based on config.txt)" << endl
+        << "    - screen -s <name>      (start a new process)" << endl
+        << "    - screen -r <name>      (reattaches to an existing process)" << endl
+        << "    - screen -ls            (list all processes)" << endl
+        << "    - process-smi           (prints process info, only applicable when attached to a process)" << endl
+        << "    - scheduler-start       (starts the creation of dummy processes at configured intervals)" << endl
+        << "    - scheduler-stop        (stops the creation of dummy processes initiated by scheduler-test)" << endl
+        << "    - report-util           (generates a CPU utilization report and writes it to csopesy-log.txt)" << endl
+        << "    - clear                 (clears the screen)" << endl
+        << "    - help                  (displays list of commands)" << endl
+        << "    - exit                  (exits the emulator)" << RESET << endl;
 }

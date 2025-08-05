@@ -1,2 +1,21 @@
-﻿  main.cpp
+﻿  ConsoleManager.cpp
+D:\Documents\School\STINTSY\CSOPESY_OS_Project\CSOPESY-OS-Project\CSOPESY OS Project\ConsoleManager.cpp(534,139): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+D:\Documents\School\STINTSY\CSOPESY_OS_Project\CSOPESY-OS-Project\CSOPESY OS Project\ConsoleManager.cpp(534,139): warning C4267:         with
+D:\Documents\School\STINTSY\CSOPESY_OS_Project\CSOPESY-OS-Project\CSOPESY OS Project\ConsoleManager.cpp(534,139): warning C4267:         [
+D:\Documents\School\STINTSY\CSOPESY_OS_Project\CSOPESY-OS-Project\CSOPESY OS Project\ConsoleManager.cpp(534,139): warning C4267:             _Ty=int
+D:\Documents\School\STINTSY\CSOPESY_OS_Project\CSOPESY-OS-Project\CSOPESY OS Project\ConsoleManager.cpp(534,139): warning C4267:         ]
+D:\Documents\School\STINTSY\CSOPESY_OS_Project\CSOPESY-OS-Project\CSOPESY OS Project\ConsoleManager.cpp(534,88): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+D:\Documents\School\STINTSY\CSOPESY_OS_Project\CSOPESY-OS-Project\CSOPESY OS Project\ConsoleManager.cpp(534,88): warning C4267:         with
+D:\Documents\School\STINTSY\CSOPESY_OS_Project\CSOPESY-OS-Project\CSOPESY OS Project\ConsoleManager.cpp(534,88): warning C4267:         [
+D:\Documents\School\STINTSY\CSOPESY_OS_Project\CSOPESY-OS-Project\CSOPESY OS Project\ConsoleManager.cpp(534,88): warning C4267:             _Ty=int
+D:\Documents\School\STINTSY\CSOPESY_OS_Project\CSOPESY-OS-Project\CSOPESY OS Project\ConsoleManager.cpp(534,88): warning C4267:         ]
+D:\Documents\School\STINTSY\CSOPESY_OS_Project\CSOPESY-OS-Project\CSOPESY OS Project\ConsoleManager.cpp(540,16): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  FlatMemoryAllocator.cpp
+D:\Documents\School\STINTSY\CSOPESY_OS_Project\CSOPESY-OS-Project\CSOPESY OS Project\FlatMemoryAllocator.cpp(272,12): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  InputManager.cpp
+  PagingAllocator.cpp
+  Scheduler.cpp
+  Screen.cpp
+  main.cpp
+  Generating Code...
   CSOPESY OS Project.vcxproj -> D:\Documents\School\STINTSY\CSOPESY_OS_Project\CSOPESY-OS-Project\x64\Debug\CSOPESY OS Project.exe

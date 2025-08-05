@@ -273,10 +273,8 @@ void FlatMemoryAllocator::printMemoryInfo(int quantum_size) {
 
 	for (size_t i = maximumSize - 1; i > 0; i--) {
 		incomingProcessName = allocationMap[i];
-		//outFile << incomingProcessName << " - " << i + 1 << "\n";
 		if (currentProcessName.empty() && !incomingProcessName.empty()) {
 			currentProcessName = incomingProcessName;
-			//outFile << currentProcessName << "\n" << i - 1 << "\n\n\n";
 			outFile << i + 1 << "\n" << currentProcessName << "\n";
 		}
 		else if (currentProcessName != incomingProcessName) {
@@ -336,8 +334,6 @@ void* FlatMemoryAllocator::getMemoryPtr(size_t size, string processName, std::sh
 
 	for (size_t i = 0; i < maximumSize - size + 1; ++i) {
 		if (processName == allocationMap[i]) {
-			/*cout << "I: " << i << endl;*/
-
 			return &memory[i];
 		}
 	}
@@ -351,17 +347,11 @@ void FlatMemoryAllocator::findAndRemoveProcessFromBackingStore(std::shared_ptr<S
 	bool found = false;
 
 	for (int i = 0; i < backingStore.size(); i++) {
-		//cout << "backing store process:" << backingStore[i]->getProcessName() << endl;
-		//cout << "process:" << process->getProcessName() << endl;
 		if (backingStore[i]->getProcessName() == process->getProcessName()) {
-			// Remove the process from the backing store
-			//cout << "Removing process " << process->getProcessName() << " from backing store." << endl;
 			backingStore.erase(backingStore.begin() + i);
 			break;
 		}
 	}
-
-	//cout << backingStore.size() << endl;
 }
 
 size_t FlatMemoryAllocator::getAllocatedSize() {

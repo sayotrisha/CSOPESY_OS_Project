@@ -46,6 +46,7 @@ int main()
 
     bool running = true;
     ConsoleManager::getInstance()->drawConsole();
+    ConsoleManager::getInstance()->printMarquee();
     size_t maxOverallMem = ConsoleManager::getInstance()->getMaxOverallMem();
 
     //const size_t maximumMemorySize = 16384;

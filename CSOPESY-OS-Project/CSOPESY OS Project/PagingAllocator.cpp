@@ -44,14 +44,6 @@ bool PagingAllocator::allocate(std::shared_ptr<Screen> process) {
 
 		string processId = process->getProcessName();
 		size_t numFramesNeeded = process->getNumPages();
-		/*cout << "FRAMES: " << numFramesNeeded << endl;
-		cout << "SIZE: " << freeFrameList.size() << endl;*/
-
-		for (auto it = frameMap.begin(); it != frameMap.end(); ++it) {
-			//std::cout << "Frame Index: " << it->first << " -> Process: " << it->second << "\n";
-		}
-
-		//cout << "numFramesNeeded: " << numFramesNeeded << "freeFrameList size: " << freeFrameList.size() << endl;
 
 		if (numFramesNeeded > freeFrameList.size()) {
 
@@ -152,9 +144,6 @@ void PagingAllocator::visualizeBackingStore() {
 		if (process) { // Ensure process is not nullptr
 			outFile << "Index: " << index++ << " " << process->getProcessName() << std::endl;
 		}
-		else {
-			//std::cerr << "Encountered a null process in backingStore." << std::endl;
-		}
 	}
 
 }
@@ -191,11 +180,7 @@ size_t PagingAllocator::calculateUsedFrames() {
 }
 
 size_t PagingAllocator::allocateFrames(size_t numFrames, string processName) {
-	if (freeFrameList.size() < numFrames) {
-		//throw std::runtime_error("Not enough free frames available for allocation.");
-	}
 	size_t frameIndex = freeFrameList.back();
-
 
 	for (size_t i = 0; i < numFrames; ++i) {
 		frameMap[frameIndex + i] = processName;
@@ -248,9 +233,6 @@ std::string PagingAllocator::findOldestProcess() {
 		std::lock_guard<std::mutex> lock(allocationMap2Mutex);
 		oldest = allocationMap.front();
 	}
-
-	//allocationMap.pop();
-
 	return oldest->getProcessName();
 
 }
@@ -259,17 +241,11 @@ void PagingAllocator::findAndRemoveProcessFromBackingStore(std::shared_ptr<Scree
 	bool found = false;
 
 	for (int i = 0; i < backingStore.size(); i++) {
-		//cout << "backing store process:" << backingStore[i]->getProcessName() << endl;
-		//cout << "process:" << process->getProcessName() << endl;
 		if (backingStore[i]->getProcessName() == process->getProcessName()) {
-			// Remove the process from the backing store
-			//cout << "Removing process " << process->getProcessName() << " from backing store." << endl;
 			backingStore.erase(backingStore.begin() + i);
 			break;
 		}
 	}
-
-	//cout << backingStore.size() << endl;
 }
 
 void PagingAllocator::allocateFromBackingStore(std::shared_ptr<Screen> process) {

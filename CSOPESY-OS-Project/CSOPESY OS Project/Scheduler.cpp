@@ -42,24 +42,18 @@ void Scheduler::start() {
         std::thread([this, i]() {
             while (schedulerRunning) {
                 std::shared_ptr<Screen> process;
-
                 {
                     std::unique_lock<std::mutex> lock(processQueueMutex);
                     processQueueCondition.wait(lock, [this]() { return !processQueue.empty() || !schedulerRunning; });
-
                     if (!schedulerRunning) return;
-
                     process = processQueue.front();
                     processQueue.pop();
-                    //cout << "Process " << process->getProcessName() << "maximum line " << process->getTotalLine() << " current line " << process->getCurrentLine() << endl;
-
                     ++activeThreads; // Increment active thread count
                 }
 
                 void* memoryPtr = nullptr;
                 bool isFlatMemory = ConsoleManager::getInstance()->getMinMemPerProc() == ConsoleManager::getInstance()->getMaxMemPerProc();
                 bool processInMemory = false;
-
 
                 if (isFlatMemory) {
                     // if process is in memory, get the memory ptr
@@ -82,19 +76,10 @@ void Scheduler::start() {
                     // check if process is in memory
                     processInMemory = PagingAllocator::getInstance()->isProcessInMemory(process->getProcessName());
 
-                    if (processInMemory) {
-
-                        //process->setIsRunning(true);
-
-                    }
-                    // allocate the memory
-                    else {
+                    if (!processInMemory) {
                         processInMemory = PagingAllocator::getInstance()->allocate(process);
-
-
                     }
                 }
-
 
                 if (memoryPtr || processInMemory) {
                     {
@@ -122,7 +107,7 @@ void Scheduler::start() {
                         if (isFlatMemory) {
                             // get oldest process
                             std::shared_ptr<Screen> oldestProcess = FlatMemoryAllocator::getInstance()->findOldestProcess();
-                            //cout << "Oldest process: " << oldestProcess->getProcessName() << endl;
+                            
                             // get memory ptr of the oldest process
                             void* oldestMemoryPtr = FlatMemoryAllocator::getInstance()->getMemoryPtr(oldestProcess->getMemoryRequired(), oldestProcess->getProcessName(), oldestProcess);
 
@@ -273,7 +258,6 @@ void Scheduler::workerFunction(int core, std::shared_ptr<Screen> process, void* 
     else if (algorithm == "rr") {
         // Round-Robin logic
         int quantum = ConsoleManager::getInstance()->getTimeSlice();  // Get RR time slice
-
         // Process for the duration of the quantum or until the process is finished
         for (int i = 0; i < quantum && process->getCurrentLine() < process->getTotalLine(); i++) {
             if (ConsoleManager::getInstance()->getDelayPerExec() != 0) {
@@ -284,7 +268,6 @@ void Scheduler::workerFunction(int core, std::shared_ptr<Screen> process, void* 
             else {
                 std::this_thread::sleep_for(std::chrono::milliseconds(100));
             }
-            //cout << "running rr" << process->getProcessName() << " " << process->getCurrentLine() << " " << process->getTotalLine() << endl;
             process->setCurrentLine(process->getCurrentLine() + 1);
             PagingAllocator::getInstance()->setNumPagedIn(PagingAllocator::getInstance()->getNumPagedIn() + 1);
             PagingAllocator::getInstance()->setNumPagedOut(PagingAllocator::getInstance()->getNumPagedOut() + 1);
@@ -296,15 +279,12 @@ void Scheduler::workerFunction(int core, std::shared_ptr<Screen> process, void* 
                 idleCpuTicks += coresAvailable;
             }
         }
-
         //if process is not finished, re-queue it but retain its core affinity
         if (process->getCurrentLine() < process->getTotalLine()) {
             std::lock_guard<std::mutex> lock(processQueueMutex);
             processQueue.push(process);  // Re-queue the unfinished process
             processQueueCondition.notify_one();
         }
-
-
         process->setIsRunning(false);
         // subtract cores utilization
         {
